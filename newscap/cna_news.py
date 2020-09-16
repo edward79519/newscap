@@ -2,6 +2,7 @@ import requests
 from bs4 import BeautifulSoup
 from newscap.cna_news_arti import articlepy
 from newscap.Article import Article
+from datetime import datetime
 
 def cnapy(keyword):
 
@@ -18,13 +19,14 @@ def cnapy(keyword):
     for m in metas:
         url = m.find("a")["href"]
         title = m.find("h2").text
-        a_time = m.find("div", class_="date").text
+        # a_time = m.find("div", class_="date").text
+        a_time = datetime.strptime(m.find("div", class_="date").text, "%Y/%m/%d %H:%M")
         provider = "中央社"
         arti_dict = articlepy(url)
         # print(title, a_time, provider, arti_dict["name"], url, arti_dict["bfcn"])
         arti = Article(title=title, time=a_time, author=arti_dict["name"], provider=provider, url=url, bfcn=arti_dict["bfcn"])
         article_all.append(arti)
-        # print(arti)
+        #print(arti)
 
     return article_all
 

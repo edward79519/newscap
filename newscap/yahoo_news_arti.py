@@ -11,7 +11,8 @@ def articlepy(url):
     arti_title = html.find("header", id="Col1-1-HeadComponentTitle").text
     arti_provi = html.find('span', class_="provider-link").text
     arti_name = html.find("div", itemprop="name").text
-    arti_time = html.find("time", itemprop="datePublished")["datetime"]
+    arti_time = html.find("time", itemprop="datePublished")["datetime"][:19]
+    arti_time = datetime.strptime(arti_time, "%Y-%m-%dT%H:%M:%S")
     #print(arti_title, arti_provi, arti_name, arti_time)
 
     atri_dict = {

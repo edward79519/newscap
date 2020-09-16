@@ -34,10 +34,9 @@ def yahoopy(keywords):
     return article_all
 
 
-'''
+
 def main():
     article_all = yahoopy("%E5%AF%B6%E6%99%B6")
     print(len(article_all))
 
 main()
-'''

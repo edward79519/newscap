@@ -1,7 +1,7 @@
 import requests
 from newscap.Article import Article
 from bs4 import BeautifulSoup
-import time
+from datetime import datetime
 
 def stormpy(keywords):
     url = "https://www.storm.mg/site-search/result?q=" + keywords
@@ -17,7 +17,8 @@ def stormpy(keywords):
     for m in metas:
         title = m.find("p", class_="card_title").text
         author = m.find("span", class_="info_author").text
-        a_time = m.find("span", class_="info_time").text
+        # a_time = m.find("span", class_="info_time").text
+        a_time = datetime.strptime(m.find("span", class_="info_time").text, "%Y-%m-%d %H:%M")
         provider = "風傳媒"
         bfcn = m.find("a", class_="card_substance").text
         url = "https://www.storm.mg" + m.find("a", class_="card_link")["href"]

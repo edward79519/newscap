@@ -1,5 +1,6 @@
 import requests
 from bs4 import BeautifulSoup
+from datetime import datetime
 
 def articlepy(url):
     headers = {
@@ -10,12 +11,13 @@ def articlepy(url):
     content = html.find("div", id="story_body")
     title = content.find("h2", id="story_art_title").text
     a_time = content.find("div", class_="shareBar__info--author").find("span").text
+    p_time = datetime.strptime(a_time, "%Y-%m-%d %H:%M")
     author = content.find("div", class_="shareBar__info--author").text.strip(a_time)
     author = author.replace("記者", "").split(" ")[1][0:3]
-    # print(title, a_time, author)
+    #print(title, a_time, author)
     atri_dict = {
         "title": title,
-        "time": a_time,
+        "time": p_time,
         "name": author,
     }
     # print(atri_dict)

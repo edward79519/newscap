@@ -1,21 +1,23 @@
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy import Column, String, create_engine, exc
+from sqlalchemy import Column, String, create_engine, exc, DateTime
 from sqlalchemy.orm import sessionmaker
 from newscap.yahoo_news import yahoopy
 from newscap.cna_news import cnapy
 from newscap.storm_news import stormpy
 from newscap.udnmoney_news import udnmoneypy
+from datetime import datetime
 
 Base = declarative_base()
-engine = create_engine('mysql+pymysql://it_user:it_password@192.168.11.171/it_test?charset=utf8', echo=True)
+engine = create_engine('mysql+pymysql://it_user:it_password@192.168.11.171/it_test?charset=utf8&binary_prefix=true', echo=True)
 DBsession = sessionmaker(bind=engine)
 session = DBsession()
 
 class News(Base):
-    __tablename__ = 'news2'
+    __tablename__ = 'news3'
 
     title = Column(String(100))
-    time = Column(String(100))
+    #time = Column(String(100))
+    time = Column(DateTime)
     author = Column(String(100))
     provider = Column(String(100))
     url = Column(String(1000), primary_key=True)
@@ -36,6 +38,7 @@ def main():
     article_udnmny = udnmoneypy(keywords)
 
     article_all = article_cna + article_yahoo + article_udnmny + article_storm
+
 
     # news_list = []
     for a in article_all:
